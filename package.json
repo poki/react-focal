@@ -1,0 +1,25 @@
+{
+  "name": "react-focal",
+  "version": "0.1.0",
+  "description": "Component to help select the focal point in an image",
+  "author": "chielkunkels",
+  "license": "MIT",
+  "keywords": [
+    "image",
+    "focal",
+    "focal",
+    "point",
+    "crop"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/chielkunkels/react-focal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chielkunkels/react-focal/issues"
+  },
+  "homepage": "https://github.com/chielkunkels/react-focal#readme"
+}
