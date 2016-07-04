@@ -6,4 +6,17 @@
 	.focal {
 		box-shadow: 0 0 12px rgba(#000, .3);
 	}
+
+	&__coords {
+		margin-top: 12px;
+		text-align: center;
+
+		span {
+			display: inline-block;
+			width: 30px;
+			margin: 0 12px;
+			font-size: 24px;
+			text-align: center;
+		}
+	}
 }
