@@ -30,9 +30,9 @@ export default class Focal extends React.Component {
 			previewHeight: 0,
 		};
 
-		this.onMouseDown = this.onMouseDown.bind(this);
-		this.onMouseMove = this.onMouseMove.bind(this);
-		this.onMouseUp = this.onMouseUp.bind(this);
+		this.onDragStart = this.onDragStart.bind(this);
+		this.onDragMove = this.onDragMove.bind(this);
+		this.onDragEnd = this.onDragEnd.bind(this);
 	}
 
 	componentWillMount() {
@@ -47,20 +47,22 @@ export default class Focal extends React.Component {
 		}
 	}
 
-	onMouseDown(ev) {
+	onDragStart(ev) {
 		ev.preventDefault();
 
 		this.startPoint = { x: this.state.pointX, y: this.state.pointY };
-		this.startPos = { x: ev.pageX, y: ev.pageY };
+		this.startPos = this.getPointer(ev);
 
 		this.setState({ dragging: true });
 
-		document.body.addEventListener('mousemove', this.onMouseMove);
-		document.body.addEventListener('mouseup', this.onMouseUp);
+		document.body.addEventListener('mousemove', this.onDragMove);
+		document.body.addEventListener('touchmove', this.onDragMove);
+		document.body.addEventListener('mouseup', this.onDragEnd);
+		document.body.addEventListener('touchend', this.onDragEnd);
 	}
 
-	onMouseMove(ev) {
-		const pos = { x: ev.pageX, y: ev.pageY };
+	onDragMove(ev) {
+		const pos = this.getPointer(ev);
 		const dX = this.startPos.x - pos.x;
 		const dY = this.startPos.y - pos.y;
 
@@ -68,11 +70,22 @@ export default class Focal extends React.Component {
 		this.setPosition(this.startPoint.x - dX, this.startPoint.y - dY);
 	}
 
-	onMouseUp() {
+	onDragEnd() {
 		this.setState({ dragging: false });
 
-		document.body.removeEventListener('mousemove', this.onMouseMove);
-		document.body.removeEventListener('mouseup', this.onMouseUp);
+		document.body.removeEventListener('mousemove', this.onDragMove);
+		document.body.removeEventListener('touchmove', this.onDragMove);
+		document.body.removeEventListener('mouseup', this.onDragEnd);
+		document.body.removeEventListener('touchend', this.onDragEnd);
+	}
+
+	getPointer(ev) {
+		if (ev.touches || ev.changedTouches) {
+			const t = ev.touches[0] || ev.changedTouches[0];
+			return { x: t.pageX, y: t.pageY };
+		}
+
+		return { x: ev.pageX, y: ev.pageY };
 	}
 
 	setPosition(x, y) {
@@ -169,7 +182,8 @@ export default class Focal extends React.Component {
 			<article className={classes.join(' ')} style={styles}>
 				<div
 					className="focal__point"
-					onMouseDown={this.onMouseDown}
+					onMouseDown={this.onDragStart}
+					onTouchStart={this.onDragStart}
 					style={pointStyles}
 				/>
 				{preview ? this.renderOverlays() : ''}
