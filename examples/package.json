@@ -4,12 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "../node_modules/.bin/babel -D -d dist/server src/server",
-    "run": "npm run build && node dist/server/index.js"
+    "build:client": "mkdirp dist/public && browserify --extension .jsx -t babelify src/client -o dist/public/app.js",
+    "build:server": "../node_modules/.bin/babel -D -d dist/server src/server",
+    "build:styles": "../node_modules/.bin/node-sass src/styles/app.scss dist/public/app.css",
+    "build": "../node_modules/.bin/npm-run-all clean --parallel build:*",
+    "clean": "../node_modules/.bin/rimraf dist",
+    "dev:client": "mkdirp dist/public && watchify --extension .jsx -t babelify src/client -o dist/public/app.js",
+    "dev:server": "../node_modules/.bin/babel -D -w -d dist/server src/server",
+    "dev:styles": "npm run build:styles && ../node_modules/.bin/node-sass -w src/styles/app.scss dist/public/app.css",
+    "dev": "../node_modules/.bin/npm-run-all clean --parallel dev:*",
+    "nodemon": "nodemon dist/server/index.js"
   },
   "author": "chielkunkels",
   "license": "MIT",
+  "dependencies": {
+    "react-dom": "^15.2.0"
+  },
   "devDependencies": {
-    "express": "^4.14.0"
+    "babelify": "^7.3.0",
+    "browserify": "^13.0.1",
+    "express": "^4.14.0",
+    "mkdirp": "^0.5.1",
+    "nodemon": "^1.9.2",
+    "serve-static": "^1.11.1",
+    "watchify": "^3.7.0"
   }
 }
