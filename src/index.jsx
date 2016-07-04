@@ -9,6 +9,7 @@ export default class Focal extends React.Component {
 		onChange: React.PropTypes.func,
 		height: React.PropTypes.number.isRequired,
 		width: React.PropTypes.number.isRequired,
+		preview: React.PropTypes.string,
 		x: React.PropTypes.number,
 		y: React.PropTypes.number,
 	};
@@ -25,11 +26,25 @@ export default class Focal extends React.Component {
 			dragging: false,
 			pointX: width / 100 * x,
 			pointY: height / 100 * y,
+			previewWidth: 0,
+			previewHeight: 0,
 		};
 
 		this.onMouseDown = this.onMouseDown.bind(this);
 		this.onMouseMove = this.onMouseMove.bind(this);
 		this.onMouseUp = this.onMouseUp.bind(this);
+	}
+
+	componentWillMount() {
+		if (this.props.preview) {
+			this.setPreview(this.props.preview);
+		}
+	}
+
+	componentWillReceiveProps({ preview }) {
+		if (preview && preview !== this.props.preview) {
+			this.setPreview(preview);
+		}
 	}
 
 	onMouseDown(ev) {
@@ -79,8 +94,67 @@ export default class Focal extends React.Component {
 		}
 	}
 
+	setPreview(preview) {
+		const s = preview.split(':');
+
+		let width = parseInt(s[0], 10);
+		let height = parseInt(s[1], 10);
+
+		let ratio;
+		if (width < this.props.width && height < this.props.height) {
+			ratio = this.props.width / width;
+			width *= ratio;
+			height *= ratio;
+		}
+
+		if (width > this.props.width) {
+			ratio = this.props.width / width;
+			width *= ratio;
+			height *= ratio;
+		}
+
+		if (height > this.props.height) {
+			ratio = this.props.height / height;
+			width *= ratio;
+			height *= ratio;
+		}
+
+		width = Math.round(width);
+		height = Math.round(height);
+
+		this.setState({
+			previewWidth: width,
+			previewHeight: height,
+		});
+	}
+
+	renderOverlays() {
+		const { pointX, pointY, previewWidth: width, previewHeight: height } = this.state;
+
+		const x = clamp(pointX - (width / 2), 0, this.props.width - width);
+		const y = clamp(pointY - (height / 2), 0, this.props.height - height);
+
+		const previewStyle = { width, height, transform: `translate(${x}px, ${y}px)` };
+		let overlay1Style;
+		let overlay2Style;
+
+		if (width === this.props.width) {
+			overlay1Style = { transform: `translate(0, ${y - this.props.height}px)` };
+			overlay2Style = { transform: `translate(0, ${y + height}px)` };
+		} else {
+			overlay1Style = { transform: `translate(${x - this.props.width}px, 0)` };
+			overlay2Style = { transform: `translate(${x + width}px, 0)` };
+		}
+
+		return [
+			<div key={0} className="focal__preview" style={previewStyle} />,
+			<div key={1} className="focal__overlay" style={overlay1Style} />,
+			<div key={2} className="focal__overlay" style={overlay2Style} />,
+		];
+	}
+
 	render() {
-		const { width, height } = this.props;
+		const { width, height, preview } = this.props;
 		const { pointX, pointY } = this.state;
 
 		const classes = ['focal'];
@@ -98,6 +172,7 @@ export default class Focal extends React.Component {
 					onMouseDown={this.onMouseDown}
 					style={pointStyles}
 				/>
+				{preview ? this.renderOverlays() : ''}
 			</article>
 		);
 	}

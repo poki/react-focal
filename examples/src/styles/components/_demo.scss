@@ -7,6 +7,28 @@
 		box-shadow: 0 0 12px rgba(#000, .3);
 	}
 
+	&__crops {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__crop {
+		margin-left: 18px;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		font: inherit;
+
+		&:focus {
+			outline: 0;
+		}
+
+		&.is-active {
+			text-decoration: underline;
+		}
+	}
+
 	&__coords {
 		margin-top: 12px;
 		text-align: center;
