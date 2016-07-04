@@ -1,6 +1,6 @@
 {
   "name": "react-focal",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Component to help select the focal point in an image",
   "main": "lib/index.js",
   "author": "chielkunkels",
