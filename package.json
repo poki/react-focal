@@ -1,6 +1,6 @@
 {
   "name": "react-focal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Component to help select the focal point in an image",
   "main": "lib/index.js",
   "author": "chielkunkels",
@@ -19,7 +19,8 @@
     "clean": "rimraf lib",
     "dev:scripts": "babel -w -d lib src",
     "dev:styles": "npm run build:styles && node-sass -w src/focal.scss lib/focal.css",
-    "dev": "npm-run-all clean --parallel dev:*"
+    "dev": "npm-run-all clean --parallel dev:*",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
