@@ -55,10 +55,10 @@ export default class Focal extends React.Component {
 
 		this.setState({ dragging: true });
 
-		document.body.addEventListener('mousemove', this.onDragMove);
-		document.body.addEventListener('touchmove', this.onDragMove);
-		document.body.addEventListener('mouseup', this.onDragEnd);
-		document.body.addEventListener('touchend', this.onDragEnd);
+		window.addEventListener('mousemove', this.onDragMove);
+		window.addEventListener('touchmove', this.onDragMove);
+		window.addEventListener('mouseup', this.onDragEnd);
+		window.addEventListener('touchend', this.onDragEnd);
 	}
 
 	onDragMove(ev) {
@@ -73,10 +73,10 @@ export default class Focal extends React.Component {
 	onDragEnd() {
 		this.setState({ dragging: false });
 
-		document.body.removeEventListener('mousemove', this.onDragMove);
-		document.body.removeEventListener('touchmove', this.onDragMove);
-		document.body.removeEventListener('mouseup', this.onDragEnd);
-		document.body.removeEventListener('touchend', this.onDragEnd);
+		window.removeEventListener('mousemove', this.onDragMove);
+		window.removeEventListener('touchmove', this.onDragMove);
+		window.removeEventListener('mouseup', this.onDragEnd);
+		window.removeEventListener('touchend', this.onDragEnd);
 	}
 
 	getPointer(ev) {
