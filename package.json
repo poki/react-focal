@@ -8,7 +8,6 @@
   "keywords": [
     "image",
     "focal",
-    "focal",
     "point",
     "crop"
   ],
@@ -24,12 +23,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/chielkunkels/react-focal.git"
+    "url": "git+ssh://git@github.com/poki/react-focal.git"
   },
   "bugs": {
-    "url": "https://github.com/chielkunkels/react-focal/issues"
+    "url": "https://github.com/poki/react-focal/issues"
   },
-  "homepage": "https://github.com/chielkunkels/react-focal#readme",
+  "homepage": "https://github.com/poki/react-focal#readme",
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-eslint": "^6.1.0",
@@ -43,10 +42,10 @@
     "eslint-plugin-react": "^5.2.2",
     "node-sass": "^3.8.0",
     "npm-run-all": "^2.3.0",
-    "react": "^15.2.0",
+    "react": "^16.2.0",
     "rimraf": "^2.5.3"
   },
-  "peerDependencies": {
-    "react": "^15.2.0"
+  "dependencies": {
+    "prop-types": "^15.6.0"
   }
 }

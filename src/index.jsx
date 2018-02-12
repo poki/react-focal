@@ -1,4 +1,5 @@
 import React from 'react';
+import PT from 'prop-types';
 
 function clamp(val, min, max) {
 	return val < min ? min : val > max ? max : val;
@@ -6,12 +7,12 @@ function clamp(val, min, max) {
 
 export default class Focal extends React.Component {
 	static propTypes = {
-		onChange: React.PropTypes.func,
-		height: React.PropTypes.number.isRequired,
-		width: React.PropTypes.number.isRequired,
-		preview: React.PropTypes.string,
-		x: React.PropTypes.number,
-		y: React.PropTypes.number,
+		onChange: PT.func,
+		height: PT.number.isRequired,
+		width: PT.number.isRequired,
+		preview: PT.string,
+		x: PT.number,
+		y: PT.number,
 	};
 
 	static defaultProps = {
